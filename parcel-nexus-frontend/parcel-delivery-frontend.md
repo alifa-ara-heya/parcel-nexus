@@ -89,49 +89,51 @@ You will create:
 
 - **Role-based navigation menu** (different for each role)
 - **Loading indicators** and **global error handling**
-- **Form validations** (required fields, numeric checks, positive amounts)  and adnvanced filtering.
+- **Form validations** (required fields, numeric checks, positive amounts) and advanced filtering.
 - **Pagination** for long lists
 - **Toast Notifications**
-    - Show success/error messages with any toast package/library
-    - Makes UI feedback snappy
+  - Show success/error messages with any toast package/library
+  - Makes UI feedback snappy
 - **Dashboard & Data Visualization**
-  - **Overview Cards:** Total parcels, Delivered, In Transit, Pending/Cancelled.  
-  - **Charts:** Bar/pie charts showing parcel trends, delivery status distribution, and monthly shipments.  
-  - **Parcel Table:** Paginated, searchable, and filterable table with actions (View, Cancel, Confirm).  
-  - **Status Timeline:** Visual history of parcel updates with timestamps and notes.  
-  - **Role-Specific Views:** Sender sees their parcels, Receiver sees received parcels, Admin sees all.  
+
+  - **Overview Cards:** Total parcels, Delivered, In Transit, Pending/Cancelled.
+  - **Charts:** Bar/pie charts showing parcel trends, delivery status distribution, and monthly shipments.
+  - **Parcel Table:** Paginated, searchable, and filterable table with actions (View, Cancel, Confirm).
+  - **Status Timeline:** Visual history of parcel updates with timestamps and notes.
+  - **Role-Specific Views:** Sender sees their parcels, Receiver sees received parcels, Admin sees all.
   - **Responsive Design:** Fully responsive with consistent margins, spacing, typography, and color contrast.
 
 - **UI/UX Considerations:**
-    - Fully responsive design for all devices
-    - Maintain consistent margins, spacing, and clean typography
-    - Clear theme and accessible color contrasts
-    - Performance improvements via lazy-loading or skeleton loaders
-    - Avoid placeholder text; use real or realistic data for a professional finish
+  - Fully responsive design for all devices
+  - Maintain consistent margins, spacing, and clean typography
+  - Clear theme and accessible color contrasts
+  - Performance improvements via lazy-loading or skeleton loaders
+  - Avoid placeholder text; use real or realistic data for a professional finish
 
 ---
 
 ## **Submission Guidelines**
 
 1. **Codebase**
-    - Submit a clean, modular, and documented codebase
-    - Follow best practices for reusable components
-    - Include a **README** with:
-        - Project overview
-        - Setup instructions
-        - Technology stack
-        - Live URL (if deployed)
-        - Any other relevant notes
+   - Submit a clean, modular, and documented codebase
+   - Follow best practices for reusable components
+   - Include a **README** with:
+     - Project overview
+     - Setup instructions
+     - Technology stack
+     - Live URL (if deployed)
+     - Any other relevant notes
 2. **GitHub Repository**
-    - Separate repositories for Frontend and Backend.
-    - Commit history showing development progress (minimum 10 meaningful commit messages for each frontend and backend repo; otherwise, you will get 0).
+   - Separate repositories for Frontend and Backend.
+   - Commit history showing development progress (minimum 10 meaningful commit messages for each frontend and backend repo; otherwise, you will get 0).
 3. **Live Deployment**
-    - Provide live deployment URLs for both frontend and backend
+   - Provide live deployment URLs for both frontend and backend
 4. **Demo Video**
 
 A short video (5–10 minutes) showing:
 
 - Show authentication flow and dashboards for **Sender, Receiver, Admin**
 - Demonstrate parcel creation, cancellation, delivery confirmation, and admin management
+
 1. **Credentials**
-    - Provide admin/sender/receiver login details (email & password) for testing
+   - Provide admin/sender/receiver login details (email & password) for testing
