@@ -34,8 +34,9 @@ export const createUserZodSchema = z.object({
     address: z.string({ error: "Address must be a string." }).optional(),
 
     picture: z.url({ error: "Invalid URL format for picture." }).optional(),
-
-    role: z.enum(Role).optional(),
+    
+    // role: z.enum(Role).optional(),
+    role: z.enum(Object.values(Role) as [string, ...string[]]),
 
     // })
 });
