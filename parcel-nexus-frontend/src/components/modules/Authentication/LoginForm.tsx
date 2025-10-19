@@ -2,10 +2,11 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
     Form,
     FormControl,
@@ -14,15 +15,26 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-// import config from "@/config";
+import type { TRole } from "@/types";
+import { role as userRoles } from "@/constants/role";
 
+const loginSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email address." }),
+    password: z.string().min(1, { message: "Password is required." }),
+});
+
+type TLoginValues = z.infer<typeof loginSchema>;
 
 export function LoginForm({
     className,
     ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
     const navigate = useNavigate();
-    const form = useForm({
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const form = useForm<TLoginValues>({
+        resolver: zodResolver(loginSchema),
         //! For development only
         defaultValues: {
             email: "test@admin.com",
@@ -30,19 +42,33 @@ export function LoginForm({
         },
     });
     const [login] = useLoginMutation();
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const onSubmit = async (data: TLoginValues) => {
         try {
             const res = await login(data).unwrap();
-            if (res.success) {
+            console.log({ res });
+            if (res.success && res.data?.auths) {
+                const userRole = res.data.role as TRole;
+                console.log({ userRole });
                 toast.success("Logged in successfully");
-                navigate("/");
+
+                // Role-based redirection
+                switch (userRole) {
+                    case userRoles.admin:
+                        navigate("/admin/analytics");
+                        break;
+                    case userRoles.sender:
+                    case userRoles.receiver:
+                        navigate("/parcels");
+                        break;
+                    default:
+                        navigate(from, { replace: true });
+                }
             }
-            console.log(res);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error(err);
 
-            if (err.data.message === "Password does not match") {
+            if (err?.data?.message === "Password does not match" || err?.data?.message === "User not found!") {
                 toast.error("Invalid credentials");
             }
         }
@@ -58,7 +84,7 @@ export function LoginForm({
             </div>
             <div className="grid gap-6">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
                             control={form.control}
                             name="email"
@@ -69,7 +95,6 @@ export function LoginForm({
                                         <Input
                                             placeholder="john@example.com"
                                             {...field}
-                                            value={field.value || ""}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -88,7 +113,6 @@ export function LoginForm({
                                             type="password"
                                             placeholder="********"
                                             {...field}
-                                            value={field.value || ""}
                                         />
                                     </FormControl>
                                     <FormMessage />

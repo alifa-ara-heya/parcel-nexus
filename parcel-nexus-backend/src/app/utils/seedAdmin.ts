@@ -7,9 +7,9 @@ import { IAuthProvider, IUser, Role } from '../modules/users/user.interface';
 
 export const createAdmin = async () => {
     try {
-        const admin = await User.findOne({ email: envVars.ADMIN_EMAIL })
+        const isAdminExists = await User.findOne({ email: envVars.ADMIN_EMAIL })
 
-        if (admin) {
+        if (isAdminExists) {
             console.log("Admin already exists");
             return
         }
@@ -30,9 +30,9 @@ export const createAdmin = async () => {
             auths: [authProvider]
         }
 
-        const superAdmin = await User.create(payload)
+        const admin = await User.create(payload)
 
-        console.log('Admin created successfully', superAdmin);
+        console.log('Admin created successfully', admin);
 
     } catch (error) {
         console.log(error)
