@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+
 export type { ILogin } from "./auth.type";
 
 export interface IResponse<T> {
@@ -6,3 +8,38 @@ export interface IResponse<T> {
     message: string;
     data: T;
 }
+
+export interface ISidebarItem {
+    title: string;
+    items: {
+      title: string;
+      url: string;
+      component: ComponentType;
+    }[];
+  }
+  
+  export type TRole = "ADMIN" | "SENDER" | "RECEIVER";
+  
+  type ZodIssue = {
+    code: string;
+    expected: string;
+    received: string;
+    path: string[];
+    message: string;
+  };
+  
+  type ErrorSource = {
+    path: string;
+    message: string;
+  };
+  
+  export interface IErrorResponse {
+    success: boolean;
+    message: string;
+    errorSources?: ErrorSource[];
+    err?: {
+      issues: ZodIssue[];
+      name: string;
+    };
+    stack?: string;
+  }
