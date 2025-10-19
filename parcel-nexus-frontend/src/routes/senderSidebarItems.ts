@@ -14,7 +14,7 @@ export const senderSidebarItems: ISidebarItem[] = [
         },
         {
           title: "Create Parcels",
-          url: "/parcels",
+          url: "/parcels/create-parcels",
           component: CreateParcel,
         },
       ],

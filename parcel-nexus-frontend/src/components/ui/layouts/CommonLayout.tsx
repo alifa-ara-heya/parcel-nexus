@@ -4,6 +4,7 @@ import Navbar from "./Navbar.tsx";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api.ts";
 import { useAppDispatch, useAppSelector } from "@/redux/hook.ts";
 import { selectCurrentUser, setUser } from "@/redux/features/auth/auth.slice.ts";
+import LoadingSpinner from "@/components/modules/homepage/LoadingSpinner.tsx";
 
 interface IProps {
     children: ReactNode
@@ -28,7 +29,7 @@ const CommonLayout = ({ children }: IProps) => {
     }, [data, dispatch, isLoading]);
 
     if (isLoading && isInitialLoad) {
-        return <div>Loading...</div>; // Or a spinner component
+        return <LoadingSpinner />;
     }
     return (
         <div className="min-h-screen flex flex-col">

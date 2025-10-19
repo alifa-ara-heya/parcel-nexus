@@ -1,21 +1,36 @@
+import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
-// import {
-//     Breadcrumb,
-//     BreadcrumbItem,
-//     BreadcrumbLink,
-//     BreadcrumbList,
-//     BreadcrumbPage,
-//     BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
+import LoadingSpinner from "@/components/modules/homepage/LoadingSpinner";
 import { Separator } from "@/components/ui/separator";
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { selectCurrentUser, setUser } from "@/redux/features/auth/auth.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const user = useAppSelector(selectCurrentUser);
+    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !isInitialLoad && !!user });
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (data?.data) {
+            dispatch(setUser({ user: data.data }));
+        }
+        if (!isLoading) {
+            setIsInitialLoad(false);
+        }
+    }, [data, dispatch, isLoading]);
+
+    if (isLoading && isInitialLoad) {
+        return <LoadingSpinner />;
+    }
+
     return (
         <SidebarProvider>
             <AppSidebar />

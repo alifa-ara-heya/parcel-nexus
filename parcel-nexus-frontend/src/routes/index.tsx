@@ -4,6 +4,7 @@ import { role } from "@/constants/role";
 // import AdminLayout from "@/components/ui/layouts/AdminLayout";
 import About from "@/pages/About";
 // import Analytics from "@/pages/Analytics";
+import Parcels from "@/pages/Parcels";
 import LoginPage from "@/pages/Login";
 import RegisterPage from "@/pages/Register";
 import type { TRole } from "@/types";
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
     Component: withAuth(DashboardLayout, role.admin as TRole),
     path: "/admin",
     children: [
-      { index: true, element: <Navigate to="/admin/analytics" /> },
+      { index: true, element: <Navigate to="/admin/analytics" replace /> },
       ...generateRoutes(adminSidebarItems),
     ],
   },
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
     Component: withAuth(DashboardLayout, role.sender as TRole),
     path: "/parcels",
     children: [
-      { index: true, element: <Navigate to="/" /> },
+      { index: true, element: <Parcels /> },
       ...generateRoutes(senderSidebarItems),
     ],
   },
@@ -44,7 +45,7 @@ export const router = createBrowserRouter([
     Component: withAuth(DashboardLayout, role.receiver as TRole),
     path: "/parcels",
     children: [
-      { index: true, element: <Navigate to="/" /> },
+      { index: true, element: <Parcels /> },
       ...generateRoutes(senderSidebarItems),
     ],
   },
