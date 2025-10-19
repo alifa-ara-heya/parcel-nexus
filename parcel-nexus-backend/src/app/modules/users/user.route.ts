@@ -12,6 +12,11 @@ router.post('/register',
     userController.createUser,
 );
 
+router.get('/me',
+    checkAuth(Role.USER, Role.ADMIN, Role.DELIVERY_MAN, Role.RECEIVER, Role.SENDER),
+    userController.getMyProfile,
+);
+
 router.get('/all-users',
     checkAuth(Role.ADMIN),
     userController.getAllUsers,

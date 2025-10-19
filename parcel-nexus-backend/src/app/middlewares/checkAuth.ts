@@ -8,13 +8,9 @@ import { envVars } from "../config/env";
 
 export const checkAuth = (...authRoles: string[]) => async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const authHeader = req.headers.authorization;
+        const token = req.cookies.accessToken;
 
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
-        }
-
-        const token = authHeader.split(' ')[1];
+        // console.log({ tokenFromCookies: token });
 
         if (!token) {
             throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");

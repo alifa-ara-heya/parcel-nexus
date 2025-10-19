@@ -24,7 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import InputPassword from "@/components/ui/InputPassword";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
-import GoogleLogo from "@/assets/icons/GoogleLogo";
+// import GoogleLogo from "@/assets/icons/GoogleLogo";
 
 const registerSchema = z
     .object({
@@ -88,8 +88,8 @@ export function RegisterForm({
         try {
             const result = await register(userInfo).unwrap();
             console.log(result);
-            toast.success("User created successfully");
-            navigate("/");
+            toast.success("User created successfully. Please log in now.");
+            navigate("/login");
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error(error?.data?.errorSources[0].message);
@@ -240,14 +240,14 @@ export function RegisterForm({
                             Create account
                         </Button>
                         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                            <span className="bg-background text-muted-foreground relative z-10 px-2">
+                            {/* <span className="bg-background text-muted-foreground relative z-10 px-2">
                                 Or continue with
-                            </span>
+                            </span> */}
                         </div>
-                        <Button variant="outline" className="w-full">
+                        {/* <Button variant="outline" className="w-full">
                             <GoogleLogo />
                             Login with Google
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className="text-center text-sm">
                         Already have an account?{" "}

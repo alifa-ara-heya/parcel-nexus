@@ -16,6 +16,23 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getMyProfile = catchAsync(async (req: Request, res: Response) => {
+    // The user's ID is attached to the request by the `checkAuth` middleware
+    const userId = req.user!.userId.toString();
+    const user = await userService.getMyProfile(userId);
+
+    // Convert to a plain object to remove the password before sending the response
+    const userResponse = user?.toObject();
+    delete userResponse?.password;
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User profile retrieved successfully',
+        data: userResponse,
+    });
+});
+
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const result = await userService.getAllUsers();
 
@@ -58,6 +75,7 @@ const updateUserStatus = catchAsync(async (req: Request, res: Response) => {
 
 export const userController = {
     createUser,
+    getMyProfile,
     getAllUsers,
     assignRole,
     updateUserStatus,

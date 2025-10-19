@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse, ISendOtp, IVerifyOtp } from "@/types";
+import { setUser, logoutUser } from "./auth.slice";
+import { toast } from "sonner";
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,6 +10,17 @@ export const authApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: userInfo,
             }),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    if (data?.data?.user) {
+                        dispatch(setUser({ user: data.data.user }));
+                    }
+                } catch (error) {
+                    // handle error
+                    console.log('error from auth.api.ts', error);
+                }
+            },
         }),
         logout: builder.mutation({
             query: () => ({
@@ -18,7 +30,9 @@ export const authApi = baseApi.injectEndpoints({
             async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    // Dispatching this action will clear all cached data from the API state.
+                    toast.success("Successfully logged out");
+                    dispatch(logoutUser());
+                    // Dispatching this will clear all cached data from the API state.
                     dispatch(baseApi.util.resetApiState());
                 } catch (error) {
                     // handle error
@@ -29,20 +43,6 @@ export const authApi = baseApi.injectEndpoints({
         register: builder.mutation({
             query: (userInfo) => ({
                 url: "/user/register",
-                method: "POST",
-                data: userInfo,
-            }),
-        }),
-        sendOtp: builder.mutation<IResponse<null>, ISendOtp>({
-            query: (userInfo) => ({
-                url: "/otp/send",
-                method: "POST",
-                data: userInfo,
-            }),
-        }),
-        verifyOtp: builder.mutation<IResponse<null>, IVerifyOtp>({
-            query: (userInfo) => ({
-                url: "/otp/verify",
                 method: "POST",
                 data: userInfo,
             }),
@@ -60,8 +60,6 @@ export const authApi = baseApi.injectEndpoints({
 export const {
     useRegisterMutation,
     useLoginMutation,
-    useSendOtpMutation,
-    useVerifyOtpMutation,
     useUserInfoQuery,
     useLogoutMutation,
 } = authApi;

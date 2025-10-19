@@ -16,6 +16,11 @@ const createUser = async (payload: IUser) => {
     return result;
 }
 
+const getMyProfile = async(userId: string) => {
+    const user = await User.findById(userId)
+    return user;
+}
+
 const getAllUsers = async (): Promise<IUser[]> => {
     // Find all users but exclude admins from the list for security.
     // Also, exclude the password field from the result.
@@ -73,6 +78,7 @@ const updateUserStatus = async (userId: string, newStatus: IsActive, adminId: st
 
 export const userService = {
     createUser,
+    getMyProfile,
     getAllUsers,
     assignRole,
     updateUserStatus,

@@ -13,13 +13,22 @@ const app: Application = express();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://parcel-delivery-system-alpha.vercel.app'
+];
+
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:5173',
-        'https://parcel-delivery-system-alpha.vercel.app'
-    ],
-    credentials: true
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 }));
 
 // Initialize passport
@@ -28,7 +37,7 @@ app.use(passport.initialize());
 // Application Routes
 app.use('/api/v1', router);
 app.get('/', (req: Request, res: Response) => {
-    res.send('Welcome from Parcel Delivery API.')
+    res.send('Welcome from Parcel Delivery API. WELCOME!')
 })
 
 app.use(globalErrorHandler)

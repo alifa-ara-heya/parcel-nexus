@@ -14,13 +14,8 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import config from "@/config";
-// import { z } from "zod";
+// import config from "@/config";
 
-// const loginSchema = z.object({
-//   email: z.email({ error: "Please enter a valid email address." }),
-//   password: z.string().min(1, { error: "Password is required." }),
-// });
 
 export function LoginForm({
     className,
@@ -30,7 +25,7 @@ export function LoginForm({
     const form = useForm({
         //! For development only
         defaultValues: {
-            email: "alifaaraheya@gmail.com",
+            email: "test@admin.com",
             password: "Abc@123",
         },
     });
@@ -49,11 +44,6 @@ export function LoginForm({
 
             if (err.data.message === "Password does not match") {
                 toast.error("Invalid credentials");
-            }
-
-            if (err.data.message === "User is not verified") {
-                toast.error("Your account is not verified");
-                navigate("/verify", { state: data.email });
             }
         }
     };
@@ -112,7 +102,7 @@ export function LoginForm({
                     </form>
                 </Form>
 
-                <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                {/* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                     <span className="relative z-10 bg-background px-2 text-muted-foreground">
                         Or continue with
                     </span>
@@ -125,7 +115,7 @@ export function LoginForm({
                     onClick={() => window.open(`${config.baseUrl}/auth/google`)}
                 >
                     Login with Google
-                </Button>
+                </Button>*/}
             </div>
             <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}

@@ -36,11 +36,7 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
             success: true,
             statusCode: httpStatus.OK,
             message: "User logged in successfully",
-            data: {
-                accessToken: userTokens.accessToken,
-                refreshToken: userTokens.refreshToken,
-                user: userResponse,
-            }
+            data: userResponse,
         })
     })(req, res, next)
 
@@ -76,16 +72,18 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: N
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logout = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
-    res.clearCookie("accessToken", {
+    const cookieOptions = {
         httpOnly: true,
         secure: envVars.NODE_ENV === 'production',
-        sameSite: "lax"
+        sameSite: envVars.NODE_ENV === 'production' ? 'none' as const : 'lax' as const,
+    };
+
+    res.clearCookie("accessToken", {
+        ...cookieOptions,
     })
 
     res.clearCookie("refreshToken", {
-        httpOnly: true,
-        secure: envVars.NODE_ENV === 'production',
-        sameSite: "lax"
+        ...cookieOptions,
     })
 
 

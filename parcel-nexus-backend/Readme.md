@@ -26,6 +26,10 @@ This API emulates the core functionalities of a professional courier service lik
 
 ---
 
+### **🛠️ Reminder For Me**
+
+Every time I make any changes, I should use just the command `tsc` and then `vercel --prod` to deploy. If the `dist` folder is not automatically created, then create it manually first.
+
 ### **🛠️ Environment Setup**
 
 To get the project running locally, follow these steps:
