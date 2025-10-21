@@ -15,8 +15,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import type { TRole } from "@/types";
-import { role as userRoles } from "@/constants/role";
 
 const loginSchema = z.object({
     email: z.email({ message: "Please enter a valid email address." }),
@@ -42,38 +40,24 @@ export function LoginForm({
         },
     });
     const [login] = useLoginMutation();
-    const onSubmit = async (data: TLoginValues) => {
-        try {
-            const res = await login(data).unwrap();
-            console.log({ res });
-            if (res.success && res.data?.auths) {
-                const userRole = res.data.role as TRole;
-                console.log({ userRole });
-                toast.success("Logged in successfully");
 
-                // Role-based redirection
-                switch (userRole) {
-                    case userRoles.admin:
-                        navigate("/admin/analytics");
-                        break;
-                    case userRoles.sender:
-                        navigate("/parcels");
-                        break;
-                    case userRoles.receiver:
-                        navigate("/incoming-parcels")
-                        break;
-                    default:
-                        navigate(from, { replace: true });
-                }
-            }
+    const handleLogin = async (data: TLoginValues) => {
+        try {
+            await login({ ...data, navigate, from }).unwrap();
+            // The onQueryStarted in auth.api.ts will handle setting the user, toast, and navigation
+            // No need to duplicate the logic here
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            console.error(err);
+            console.error("Login error:", err);
 
             if (err?.data?.message === "Password does not match" || err?.data?.message === "User not found!") {
                 toast.error("Invalid credentials");
             }
         }
+    };
+
+    const onSubmit = async (data: TLoginValues) => {
+        await handleLogin(data);
     };
 
     return (
@@ -86,7 +70,10 @@ export function LoginForm({
             </div>
             <div className="grid gap-6">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-4"
+                    >
                         <FormField
                             control={form.control}
                             name="email"
@@ -122,8 +109,8 @@ export function LoginForm({
                             )}
                         />
 
-                        <Button type="submit" className="w-full">
-                            Login
+                        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                            {form.formState.isSubmitting ? "Logging in..." : "Login"}
                         </Button>
                     </form>
                 </Form>

@@ -26,10 +26,12 @@ interface IParcelFrontend {
 }
 
 const MyParcels = () => {
-    const user = useAppSelector(selectCurrentUser)
-    console.log(user);
+    // const user = useAppSelector(selectCurrentUser)
+    // console.log(user);
     // Call the RTK Query hook to fetch parcels for the current user
-    const { data, error, isLoading, isSuccess, isError } = useGetMyParcelsQuery(undefined);
+    const { data, error, isLoading, isSuccess, isError } = useGetMyParcelsQuery(undefined, {
+        // skip: !user,
+    });
 
 
     if (isLoading) {
@@ -46,9 +48,9 @@ const MyParcels = () => {
         <div className="container mx-auto py-8">
             <div>
                 <h1>This is Parcels component</h1>
-                {
+                {/* {
                     user && <h2>Welcome {user?.name}</h2>
-                }
+                } */}
             </div>
             <h1 className="text-3xl font-bold mb-6">My Parcels</h1>
 

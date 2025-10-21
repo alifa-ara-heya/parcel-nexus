@@ -15,21 +15,25 @@ import {
 import Logo from "@/assets/icons/Logo";
 import { Link } from "react-router";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import { ModeToggle } from "./ui/layouts/ModeToggler";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { logoutUser as logoutAction, selectCurrentUser } from "@/redux/features/auth/auth.slice";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { data: userData } = useUserInfoQuery(undefined);
+    const userData = useAppSelector(selectCurrentUser);
     const [logout] = useLogoutMutation();
+    const dispatch = useAppDispatch();
 
     const handleLogout = async () => {
         await logout(undefined).unwrap();
+        dispatch(logoutAction());
     };
 
     const data = {
-        navMain: getSidebarItems(userData?.data?.role),
+        navMain: getSidebarItems(userData?.role),
     };
 
     return (

@@ -7,8 +7,10 @@ import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/auth.slice";
 
 const IncomingParcels = () => {
-    const user = useAppSelector(selectCurrentUser);
-    const { data, isLoading, isError } = useGetMyIncomingParcelsQuery(undefined);
+    // const user = useAppSelector(selectCurrentUser);
+    const { data, isLoading, isError } = useGetMyIncomingParcelsQuery(undefined, {
+        // skip: !user,
+    });
     console.log({ data });
 
     if (isLoading) return <div className="text-center py-8">Loading incoming parcels...</div>;
@@ -38,11 +40,11 @@ const IncomingParcels = () => {
 
     return (
         <div className="container mx-auto py-8">
-            {user && (
+            {/* {user && (
                 <h1 className="text-2xl md:text-3xl font-bold text-primary mb-2">
                     Welcome, <span className="text-accent">{user?.name}</span>!
                 </h1>
-            )}
+            )} */}
             <h1 className="text-3xl font-bold mb-6">My Incoming Parcels</h1>
 
             {data?.data?.length === 0 ? (

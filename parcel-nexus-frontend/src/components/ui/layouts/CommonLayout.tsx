@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar.tsx";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api.ts";
@@ -11,24 +11,23 @@ interface IProps {
 }
 
 const CommonLayout = ({ children }: IProps) => {
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const user = useAppSelector(selectCurrentUser);
-    // Only run the query on initial load. After that, the user state in Redux is the source of truth.
-    // If the user logs out, `user` becomes null, and `skip` becomes true, preventing a refetch.
-    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !isInitialLoad && !user });
+    // Only run the query if there is no user in the redux store and user is not explicitly null.
+    // This handles re-hydration on page refresh but skips on logout.
+    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || user === null });
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (data?.data) {
-            dispatch(setUser({ user: data.data }));
+        if (data?.data && !user) {
+            // The token is not available from the /me endpoint response.
+            // It's set during login. This effect is for re-populating the user object on a refresh.
+            // Since we're using HTTP-only cookies, we don't need to store tokens in Redux state
+            // The cookies are automatically sent with requests
+            dispatch(setUser({ user: data.data, token: "cookie-based" }));
         }
-        // Once the initial fetch attempt is done (whether successful or not), we turn off the initial load flag.
-        if (!isLoading) {
-            setIsInitialLoad(false);
-        }
-    }, [data, dispatch, isLoading]);
+    }, [data, dispatch, user]);
 
-    if (isLoading && isInitialLoad) {
+    if (isLoading && !user) {
         return <LoadingSpinner />;
     }
     return (

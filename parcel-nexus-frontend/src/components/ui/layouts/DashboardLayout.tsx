@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import LoadingSpinner from "@/components/modules/homepage/LoadingSpinner";
 import { Separator } from "@/components/ui/separator";
@@ -13,23 +13,25 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const user = useAppSelector(selectCurrentUser);
-    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !isInitialLoad && !!user });
+    // We only want to fetch user info if there is no user in the redux store yet.
+    // After logout, `user` will be null, and this will correctly skip the query.
+    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || user === null });
     const dispatch = useAppDispatch();
 
 
 
     useEffect(() => {
-        if (data?.data) {
-            dispatch(setUser({ user: data.data }));
+        if (data?.data && !user) {
+            // The `token` is not available here, it comes from login.
+            // This effect is primarily for rehydrating the user on a page refresh.
+            // The `auth.api.ts` onQueryStarted for login handles the main setUser dispatch.
+            // Since we're using HTTP-only cookies, we don't need to store tokens in Redux state
+            dispatch(setUser({ user: data.data, token: "cookie-based" }));
         }
-        if (!isLoading) {
-            setIsInitialLoad(false);
-        }
-    }, [data, dispatch, isLoading]);
+    }, [data, dispatch, user]);
 
-    if (isLoading && isInitialLoad) {
+    if (isLoading && !user) {
         return <LoadingSpinner />;
     }
 

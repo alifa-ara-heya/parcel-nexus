@@ -36,7 +36,11 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
             success: true,
             statusCode: httpStatus.OK,
             message: "User logged in successfully",
-            data: userResponse,
+            data: {
+                accessToken: userTokens.accessToken,
+                refreshToken: userTokens.refreshToken,
+                user: userResponse,
+            },
         })
     })(req, res, next)
 

@@ -14,8 +14,8 @@ import {
 import { Link } from "react-router"
 import { ModeToggle } from "./ModeToggler"
 import { useLogoutMutation } from "@/redux/features/auth/auth.api";
-import { useAppSelector } from "@/redux/hook";
-import { selectCurrentUser } from "@/redux/features/auth/auth.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { logoutUser as logoutAction, selectCurrentUser } from "@/redux/features/auth/auth.slice";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -25,10 +25,12 @@ const navigationLinks = [
 
 export default function Navbar() {
   const user = useAppSelector(selectCurrentUser);
-  const [logout] = useLogoutMutation();
+  const [logoutMutation] = useLogoutMutation();
+  const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
-    await logout(undefined).unwrap();
+    await logoutMutation(undefined).unwrap();
+    dispatch(logoutAction());
   };
 
 
