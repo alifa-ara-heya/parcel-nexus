@@ -8,18 +8,18 @@ import { Role } from '../users/user.interface';
 const router = Router();
 
 router.post('/',
-    checkAuth(Role.USER),
+    checkAuth(Role.USER, Role.SENDER, Role.RECEIVER),
     validateRequest(createParcelZodSchema),
     parcelController.createParcel
 );
 
 router.get('/me',
-    checkAuth(Role.USER),
+    checkAuth(Role.USER, Role.SENDER, Role.RECEIVER),
     parcelController.getMyParcels
 );
 
 router.get('/incoming',
-    checkAuth(Role.USER),
+    checkAuth(Role.USER, Role.SENDER, Role.RECEIVER),
     parcelController.getIncomingParcels
 );
 
@@ -34,12 +34,12 @@ router.get('/all',
 );
 
 router.get('/:id',
-    checkAuth(Role.USER, Role.ADMIN),
+    checkAuth(Role.USER, Role.ADMIN, Role.SENDER, Role.RECEIVER),
     parcelController.getParcelById
 );
 
 router.patch('/:id/cancel',
-    checkAuth(Role.USER, Role.ADMIN),
+    checkAuth(Role.USER, Role.ADMIN, Role.SENDER, Role.RECEIVER),
     parcelController.cancelParcel
 );
 

@@ -18,7 +18,7 @@ router.get('/me',
 );
 
 router.get('/all-users',
-    checkAuth(Role.ADMIN),
+    checkAuth(Role.USER, Role.ADMIN, Role.DELIVERY_MAN, Role.RECEIVER, Role.SENDER),
     userController.getAllUsers,
 );
 

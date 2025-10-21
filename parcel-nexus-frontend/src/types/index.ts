@@ -20,6 +20,15 @@ export interface ISidebarItem {
   
   export type TRole = "ADMIN" | "SENDER" | "RECEIVER";
   
+  export interface IUser {
+    _id: string;
+    id: string;
+    name: string;
+    email: string;
+    role: TRole;
+    // Add other user properties as needed
+  }
+  
   type ZodIssue = {
     code: string;
     expected: string;

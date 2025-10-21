@@ -7,7 +7,8 @@ const recipientSchema = new Schema<IRecipient>({
         required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true,
     },
     userId: {
         type: Schema.Types.ObjectId,

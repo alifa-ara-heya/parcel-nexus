@@ -44,12 +44,12 @@ const createParcel = async (
         };
     }
     // Case 2: The sender provides recipient details manually.
-    else if (payload.recipient?.name && payload.recipient?.phone && payload.recipient?.address) {
+    else if (payload.recipient?.name && payload.recipient?.phone && payload.recipient?.address && payload.recipient?.email) {
         finalRecipient = {
             name: payload.recipient.name,
             phone: payload.recipient.phone,
             address: payload.recipient.address,
-            email: payload.recipient.email, // email is optional
+            email: payload.recipient.email, // email is now required
         };
 
         // --- Smart Enhancement ---
@@ -64,7 +64,7 @@ const createParcel = async (
     }
     // Case 3: Insufficient information was provided in the request.
     else {
-        throw new AppError(httpStatus.BAD_REQUEST, 'You must provide either a recipient userId or the full recipient details (name, phone, and address).');
+        throw new AppError(httpStatus.BAD_REQUEST, 'You must provide either a recipient userId or the full recipient details (name, email, phone, and address).');
     }
 
     // Construct the data for the new parcel, combining the payload with server-generated data.
