@@ -4,7 +4,6 @@ import { role } from "@/constants/role";
 // import AdminLayout from "@/components/ui/layouts/AdminLayout";
 import About from "@/pages/About";
 // import Analytics from "@/pages/Analytics";
-import Parcels from "@/pages/Parcels";
 import LoginPage from "@/pages/Login";
 import RegisterPage from "@/pages/Register";
 import type { TRole } from "@/types";
@@ -13,6 +12,9 @@ import { withAuth } from "@/utils/withAuth";
 import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
+import { receiverSidebarItems } from "./receiverSidebarItems";
+import IncomingParcels from "@/pages/IncomingParcels";
+import MyParcels from "@/pages/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -37,16 +39,16 @@ export const router = createBrowserRouter([
     Component: withAuth(DashboardLayout, role.sender as TRole),
     path: "/parcels",
     children: [
-      { index: true, element: <Parcels /> },
+      { index: true, element: <MyParcels /> },
       ...generateRoutes(senderSidebarItems),
     ],
   },
   {
     Component: withAuth(DashboardLayout, role.receiver as TRole),
-    path: "/parcels",
+    path: "/incoming-parcels",
     children: [
-      { index: true, element: <Parcels /> },
-      ...generateRoutes(senderSidebarItems),
+      { index: true, element: <IncomingParcels /> },
+      ...generateRoutes(receiverSidebarItems),
     ],
   },
   {

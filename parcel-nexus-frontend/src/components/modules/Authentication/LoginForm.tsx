@@ -57,8 +57,10 @@ export function LoginForm({
                         navigate("/admin/analytics");
                         break;
                     case userRoles.sender:
-                    case userRoles.receiver:
                         navigate("/parcels");
+                        break;
+                    case userRoles.receiver:
+                        navigate("/incoming-parcels")
                         break;
                     default:
                         navigate(from, { replace: true });

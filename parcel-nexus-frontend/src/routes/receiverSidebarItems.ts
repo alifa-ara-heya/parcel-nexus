@@ -1,5 +1,5 @@
 // import Bookings from "@/pages/User/Bookings";
-import Parcels from "@/pages/Parcels";
+import IncomingParcels from "@/pages/IncomingParcels";
 import type { ISidebarItem } from "@/types";
 
 export const receiverSidebarItems: ISidebarItem[] = [
@@ -8,8 +8,8 @@ export const receiverSidebarItems: ISidebarItem[] = [
     items: [
       {
         title: "Parcels",
-        url: "/parcels",
-        component: Parcels,
+        url: "my-incoming-parcels",
+        component: IncomingParcels,
       },
     ],
   },

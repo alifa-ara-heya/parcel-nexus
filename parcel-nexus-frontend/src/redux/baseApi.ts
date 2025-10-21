@@ -7,7 +7,7 @@ export const baseApi = createApi({
     //   baseQuery: fetchBaseQuery({
     //     baseUrl: config.baseUrl,
     //     credentials: "include",
-    //   }),
-    tagTypes: ["USER"],
+    //   }), 
+    tagTypes: ["USER", "PARCEL"],
     endpoints: () => ({}),
 });

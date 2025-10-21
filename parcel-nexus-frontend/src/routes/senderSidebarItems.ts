@@ -1,20 +1,20 @@
 // import Bookings from "@/pages/User/Bookings";
 import CreateParcel from "@/pages/CreateParcel";
-import Parcels from "@/pages/Parcels";
+import MyParcels from "@/pages/MyParcels";
 import type { ISidebarItem } from "@/types";
 
 export const senderSidebarItems: ISidebarItem[] = [
    {
-      title: "Parcels",
+      title: "My Parcels",
       items: [
         {
           title: "View all created parcels and their status logs",
-          url: "/parcels",
-          component: Parcels,
+          url: "my-parcels",
+          component: MyParcels,
         },
         {
-          title: "Create Parcels",
-          url: "/parcels/create-parcels",
+          title: "Create Parcel",
+          url: "create-parcel",
           component: CreateParcel,
         },
       ],

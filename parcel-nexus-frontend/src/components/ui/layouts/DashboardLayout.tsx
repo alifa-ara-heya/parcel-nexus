@@ -18,6 +18,8 @@ export default function DashboardLayout() {
     const { data, isLoading } = useUserInfoQuery(undefined, { skip: !isInitialLoad && !!user });
     const dispatch = useAppDispatch();
 
+
+
     useEffect(() => {
         if (data?.data) {
             dispatch(setUser({ user: data.data }));
@@ -30,6 +32,7 @@ export default function DashboardLayout() {
     if (isLoading && isInitialLoad) {
         return <LoadingSpinner />;
     }
+
 
     return (
         <SidebarProvider>
@@ -44,7 +47,9 @@ export default function DashboardLayout() {
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     <Outlet />
+
                 </div>
+
             </SidebarInset>
         </SidebarProvider>
     );

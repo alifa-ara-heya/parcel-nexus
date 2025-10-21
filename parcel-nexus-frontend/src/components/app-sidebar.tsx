@@ -15,10 +15,18 @@ import {
 import Logo from "@/assets/icons/Logo";
 import { Link } from "react-router";
 import { getSidebarItems } from "@/utils/getSidebarItems";
-import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { Button } from "./ui/button";
+import { LogOut } from "lucide-react";
+import { ModeToggle } from "./ui/layouts/ModeToggler";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { data: userData } = useUserInfoQuery(undefined);
+    const [logout] = useLogoutMutation();
+
+    const handleLogout = async () => {
+        await logout(undefined).unwrap();
+    };
 
     const data = {
         navMain: getSidebarItems(userData?.data?.role),
@@ -26,13 +34,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar {...props}>
-            <SidebarHeader className="items-center">
+            <SidebarHeader className="flex-row items-center justify-between">
                 <Link to="/">
                     <Logo />
                 </Link>
+                <div className="">
+                    <ModeToggle />
+                </div>
             </SidebarHeader>
             <SidebarContent>
                 {/* We create a SidebarGroup for each parent. */}
+
                 {data.navMain.map((item) => (
                     <SidebarGroup key={item.title}>
                         <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
@@ -41,7 +53,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 {item.items.map((item: any) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
-                                            <Link to={item.url}>{item.title}</Link>
+                                            <Link to={item.url} className="">{item.title}</Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
@@ -49,6 +61,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         </SidebarGroupContent>
                     </SidebarGroup>
                 ))}
+                <Button
+                    onClick={handleLogout}
+                    variant="outline"
+                    className="text-sm w-1/2 mx-auto mt-auto mb-5 bg-primary-background"
+
+                >
+                    <LogOut />
+                    Logout
+                </Button>
             </SidebarContent>
             <SidebarRail />
         </Sidebar>
