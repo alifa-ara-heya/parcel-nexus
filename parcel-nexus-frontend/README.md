@@ -91,6 +91,16 @@ Parcel Nexus Frontend is a comprehensive web application that serves as the user
    ```
    The application will be available at `http://localhost:5173`
 
+### 🧪 Test Credentials
+
+For testing purposes, you can use these pre-configured accounts:
+
+| Role | Email | Password | Access |
+|------|-------|----------|---------|
+| **Admin** | `test@admin.com` | `Abc@123` | Full system access, analytics, user & parcel management |
+| **Sender** | `test@sender.com` | `Abc@123` | Create parcels, view sent parcels, track deliveries |
+| **Receiver** | `test@recipient.com` | `Abc@123` | View incoming parcels, confirm deliveries |
+
 ### Build for Production
 
 ```bash
