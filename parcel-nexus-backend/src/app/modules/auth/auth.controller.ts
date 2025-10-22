@@ -75,22 +75,18 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response, next: N
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logout = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const isProduction = envVars.NODE_ENV === 'production';
 
     const cookieOptions = {
         httpOnly: true,
-        secure: true, // Always secure in production for cross-site cookies
-        sameSite: 'none' as const, // Allow cross-site cookies for different domains
+        secure: isProduction, // Only secure in production
+        sameSite: isProduction ? 'none' as const : 'lax' as const, // Allow cross-site cookies in production
         domain: undefined, // Let browser handle domain
+        path: '/', // Ensure we clear cookies from the correct path
     };
 
-    res.clearCookie("accessToken", {
-        ...cookieOptions,
-    })
-
-    res.clearCookie("refreshToken", {
-        ...cookieOptions,
-    })
-
+    res.clearCookie("accessToken", cookieOptions)
+    res.clearCookie("refreshToken", cookieOptions)
 
     sendResponse(res, {
         success: true,

@@ -112,7 +112,7 @@ const Home = () => {
         <div className="min-h-screen">
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-accent/10 py-20 sm:py-32">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className="space-y-8">
                             <div className="space-y-4">
@@ -191,7 +191,7 @@ const Home = () => {
 
             {/* Quick Track Section */}
             <section className="py-16 bg-muted/30">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="max-w-2xl mx-auto text-center space-y-8">
                         <div className="space-y-4">
                             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
@@ -229,7 +229,7 @@ const Home = () => {
 
             {/* Features Section */}
             <section className="py-20">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="text-center space-y-4 mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                             Why Choose Parcel Nexus?
@@ -260,7 +260,7 @@ const Home = () => {
 
             {/* Stats Section */}
             <section className="py-20 bg-primary/5">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         {stats.map((stat, index) => (
                             <div key={index} className="text-center space-y-4">
@@ -279,7 +279,7 @@ const Home = () => {
 
             {/* How It Works Section */}
             <section className="py-20">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="text-center space-y-4 mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                             How It Works
@@ -317,7 +317,7 @@ const Home = () => {
 
             {/* Testimonials Section */}
             <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4">
+                <div className="myContainer">
                     <div className="text-center space-y-4 mb-16">
                         <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                             What Our Customers Say
@@ -355,7 +355,7 @@ const Home = () => {
 
             {/* CTA Section */}
             <section className="py-20 bg-gradient-to-r from-primary to-accent">
-                <div className="container mx-auto px-4 text-center">
+                <div className="myContainer text-center">
                     <div className="max-w-3xl mx-auto space-y-8">
                         <div className="space-y-4">
                             <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground">
