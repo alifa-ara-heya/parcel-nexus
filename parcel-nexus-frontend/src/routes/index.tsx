@@ -18,6 +18,7 @@ import IncomingParcels from "@/pages/IncomingParcels";
 import MyParcels from "@/pages/MyParcels";
 import ParcelTracking from "@/pages/ParcelTracking";
 import About from "@/pages/About";
+import NotFound from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -87,5 +88,9 @@ export const router = createBrowserRouter([
   //       path: 'analytics'
   //     }
   //   ]
-  // }
+  // },
+  {
+    Component: NotFound,
+    path: "*",
+  }
 ]);
