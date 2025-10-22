@@ -1,22 +1,29 @@
 import Logo from "@/assets/icons/Logo";
+import { Link } from "react-router";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 const Footer = () => {
     return (
-        <footer className="bg-background dark:bg-background">
+        <footer className="bg-background dark:bg-background border-t">
             <div className="myContainer py-16">
                 <div className="lg:flex lg:items-start lg:gap-8">
                     <div className="text-primary dark:text-primary">
-                        <Logo />
+                        <div className="flex items-center gap-3">
+                            <Logo />
+                            <h1 className="text-primary font-semibold text-xl md:text-2xl">Parcel Nexus</h1>
+                        </div>
+                        <p className="mt-4 text-muted-foreground max-w-sm">
+                            Your trusted partner for fast, secure, and reliable parcel delivery services across the country.
+                        </p>
                     </div>
 
                     <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
                         <div className="col-span-2">
                             <div>
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Get the latest news!</h2>
+                                <h2 className="text-2xl font-bold text-foreground">Stay Updated!</h2>
 
-                                <p className="mt-4 text-gray-500 dark:text-gray-400">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-                                    molestias.
+                                <p className="mt-4 text-muted-foreground">
+                                    Get the latest updates on delivery services, new features, and special offers delivered to your inbox.
                                 </p>
                             </div>
                         </div>
@@ -26,152 +33,172 @@ const Footer = () => {
                                 <label htmlFor="UserEmail" className="sr-only"> Email </label>
 
                                 <div
-                                    className="border border-gray-100 p-2 focus-within:ring-3 sm:flex sm:items-center sm:gap-4 dark:border-gray-800"
+                                    className="border border-input p-2 focus-within:ring-2 focus-within:ring-ring sm:flex sm:items-center sm:gap-4"
                                 >
                                     <input
                                         type="email"
                                         id="UserEmail"
-                                        placeholder="john@rhcp.com"
-                                        className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm dark:bg-gray-900 dark:text-white"
+                                        placeholder="Enter your email"
+                                        className="w-full border-none bg-transparent focus:border-transparent focus:ring-transparent sm:text-sm"
                                     />
 
                                     <button
-                                        className="mt-1 w-full bg-teal-500 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-teal-600 sm:mt-0 sm:w-auto sm:shrink-0"
+                                        className="mt-1 w-full bg-primary px-6 py-3 text-sm font-bold tracking-wide text-primary-foreground uppercase transition-colors hover:bg-primary/90 sm:mt-0 sm:w-auto sm:shrink-0"
                                     >
-                                        Sign Up
+                                        Subscribe
                                     </button>
                                 </div>
                             </form>
                         </div>
 
                         <div className="col-span-2 sm:col-span-1">
-                            <p className="font-medium text-gray-900 dark:text-white">Services</p>
+                            <p className="font-medium text-foreground">Services</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        1on1 Coaching
-                                    </a>
+                                    <Link to="/track" className="text-muted-foreground transition hover:text-primary">
+                                        Package Tracking
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Company Review
-                                    </a>
+                                    <Link to="/register" className="text-muted-foreground transition hover:text-primary">
+                                        Create Account
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Accounts Review
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Express Delivery
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        HR Consulting
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Business Solutions
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        SEO Optimisation
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        International Shipping
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="col-span-2 sm:col-span-1">
-                            <p className="font-medium text-gray-900 dark:text-white">Company</p>
+                            <p className="font-medium text-foreground">Company</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        About
-                                    </a>
+                                    <Link to="/about" className="text-muted-foreground transition hover:text-primary">
+                                        About Us
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Meet the Team
-                                    </a>
+                                    <Link to="/about" className="text-muted-foreground transition hover:text-primary">
+                                        Our Team
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Accounts Review
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Careers
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Press
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="col-span-2 sm:col-span-1">
-                            <p className="font-medium text-gray-900 dark:text-white">Helpful Links</p>
+                            <p className="font-medium text-foreground">Support</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Contact
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Contact Us
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        FAQs
-                                    </a>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Help Center
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                                    <Link to="/track" className="text-muted-foreground transition hover:text-primary">
+                                        Track Package
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
                                         Live Chat
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="col-span-2 sm:col-span-1">
-                            <p className="font-medium text-gray-900 dark:text-white">Legal</p>
+                            <p className="font-medium text-foreground">Legal</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Terms of Service
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                        Shipping Policy
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
                                         Accessibility
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Returns Policy
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Refund Policy
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Hiring-3 Statistics
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="col-span-2 sm:col-span-1">
-                            <p className="font-medium text-gray-900 dark:text-white">Downloads</p>
+                            <p className="font-medium text-foreground">Contact Info</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
-                                <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        Marketing Calendar
-                                    </a>
+                                <li className="flex items-center gap-2">
+                                    <Phone className="h-4 w-4 text-primary" />
+                                    <span className="text-muted-foreground">+1 (555) 123-4567</span>
                                 </li>
 
-                                <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                                        SEO Infographics
-                                    </a>
+                                <li className="flex items-center gap-2">
+                                    <Mail className="h-4 w-4 text-primary" />
+                                    <span className="text-muted-foreground">support@parcelnexus.com</span>
+                                </li>
+
+                                <li className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4 text-primary" />
+                                    <span className="text-muted-foreground">123 Delivery Street</span>
+                                </li>
+
+                                <li className="flex items-center gap-2">
+                                    <Clock className="h-4 w-4 text-primary" />
+                                    <span className="text-muted-foreground">24/7 Support</span>
                                 </li>
                             </ul>
                         </div>
@@ -273,29 +300,29 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
+                <div className="mt-8 border-t border-border pt-8">
                     <div className="sm:flex sm:justify-between">
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                            &copy; 2022. Company Name. All rights reserved.
+                        <p className="text-xs text-muted-foreground">
+                            &copy; 2024. Parcel Nexus. All rights reserved.
                         </p>
 
                         <ul className="mt-8 flex flex-wrap justify-start gap-4 text-xs sm:mt-0 lg:justify-end">
                             <li>
-                                <a href="#" className="text-gray-500 transition hover:opacity-75 dark:text-gray-400">
+                                <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
                                     Terms & Conditions
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="#" className="text-gray-500 transition hover:opacity-75 dark:text-gray-400">
+                                <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
                                     Privacy Policy
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="#" className="text-gray-500 transition hover:opacity-75 dark:text-gray-400">
-                                    Cookies
-                                </a>
+                                <Link to="/contact" className="text-muted-foreground transition hover:text-primary">
+                                    Cookie Policy
+                                </Link>
                             </li>
                         </ul>
                     </div>

@@ -8,15 +8,16 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
-import { selectCurrentUser, setUser } from "@/redux/features/auth/auth.slice";
+import { selectCurrentUser, selectIsLoggedOut, setUser } from "@/redux/features/auth/auth.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
     const user = useAppSelector(selectCurrentUser);
-    // We only want to fetch user info if there is no user in the redux store yet.
-    // After logout, `user` will be null, and this will correctly skip the query.
-    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || user === null });
+    const isLoggedOut = useAppSelector(selectIsLoggedOut);
+    // We only want to fetch user info if there is no user in the redux store yet and user wasn't explicitly logged out.
+    // This allows rehydration from cookies on page refresh.
+    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || isLoggedOut });
     const dispatch = useAppDispatch();
 
 

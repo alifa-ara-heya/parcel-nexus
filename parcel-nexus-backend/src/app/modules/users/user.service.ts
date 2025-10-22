@@ -16,15 +16,34 @@ const createUser = async (payload: IUser) => {
     return result;
 }
 
-const getMyProfile = async(userId: string) => {
+const getMyProfile = async (userId: string) => {
     const user = await User.findById(userId)
     return user;
 }
 
-const getAllUsers = async (): Promise<IUser[]> => {
+const getAllUsers = async (page: number = 1, limit: number = 10): Promise<{ users: IUser[]; total: number; page: number; totalPages: number }> => {
+    // Calculate skip value for pagination
+    const skip = (page - 1) * limit;
+
     // Find all users but exclude admins from the list for security.
     // Also, exclude the password field from the result.
-    return User.find({ role: { $ne: Role.ADMIN } }).select('-password');
+    const [users, total] = await Promise.all([
+        User.find({ role: { $ne: Role.ADMIN } })
+            .select('-password')
+            .skip(skip)
+            .limit(limit)
+            .sort({ createdAt: -1 }), // Sort by newest first
+        User.countDocuments({ role: { $ne: Role.ADMIN } })
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+        users,
+        total,
+        page,
+        totalPages
+    };
 };
 
 const assignRole = async (userId: string, newRole: Role): Promise<IUser> => {

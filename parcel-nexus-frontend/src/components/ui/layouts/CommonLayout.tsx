@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar.tsx";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api.ts";
 import { useAppDispatch, useAppSelector } from "@/redux/hook.ts";
-import { selectCurrentUser, setUser } from "@/redux/features/auth/auth.slice.ts";
+import { selectCurrentUser, selectIsLoggedOut, setUser } from "@/redux/features/auth/auth.slice.ts";
 import LoadingSpinner from "@/components/modules/homepage/LoadingSpinner.tsx";
 
 interface IProps {
@@ -12,9 +12,10 @@ interface IProps {
 
 const CommonLayout = ({ children }: IProps) => {
     const user = useAppSelector(selectCurrentUser);
-    // Only run the query if there is no user in the redux store and user is not explicitly null.
+    const isLoggedOut = useAppSelector(selectIsLoggedOut);
+    // Only run the query if there is no user in the redux store and user wasn't explicitly logged out.
     // This handles re-hydration on page refresh but skips on logout.
-    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || user === null });
+    const { data, isLoading } = useUserInfoQuery(undefined, { skip: !!user || isLoggedOut });
     const dispatch = useAppDispatch();
 
     useEffect(() => {

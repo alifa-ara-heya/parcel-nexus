@@ -34,13 +34,22 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-    const result = await userService.getAllUsers();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const result = await userService.getAllUsers(page, limit);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'All users retrieved successfully',
-        data: result,
+        data: result.users,
+        meta: {
+            total: result.total,
+            page: result.page,
+            totalPages: result.totalPages,
+            limit
+        }
     });
 });
 

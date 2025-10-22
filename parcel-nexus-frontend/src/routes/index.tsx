@@ -2,7 +2,9 @@ import App from "@/App";
 import DashboardLayout from "@/components/ui/layouts/DashboardLayout";
 import { role } from "@/constants/role";
 // import AdminLayout from "@/components/ui/layouts/AdminLayout";
+import Home from "@/pages/Home";
 import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 // import Analytics from "@/pages/Analytics";
 import LoginPage from "@/pages/Login";
 import RegisterPage from "@/pages/Register";
@@ -15,6 +17,7 @@ import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSidebarItems";
 import IncomingParcels from "@/pages/IncomingParcels";
 import MyParcels from "@/pages/MyParcels";
+import ParcelTracking from "@/pages/ParcelTracking";
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +25,24 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
+        Component: Home,
+        path: ''
+      },
+      {
         Component: About,
         path: 'about'
+      },
+      {
+        Component: Contact,
+        path: 'contact'
+      },
+      {
+        Component: ParcelTracking,
+        path: 'track',
+      },
+      {
+        Component: ParcelTracking,
+        path: 'track/:trackingNumber',
       }
     ]
   },

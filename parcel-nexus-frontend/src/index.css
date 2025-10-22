@@ -49,7 +49,8 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.58 0.14 182.5); /* #009689 */
+  --primary: oklch(0.58 0.14 182.5);
+  /* #009689 */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -57,13 +58,15 @@
   --muted-foreground: oklch(0.556 0 0);
   /* --accent: oklch(0.97 0 0); */
   /* Using a warm orange for accent */
-  --accent: oklch(0.75 0.183 55.93); /* #F97316 */
+  --accent: oklch(0.75 0.183 55.93);
+  /* #F97316 */
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   /* --ring: oklch(0.708 0 0); */
-  --ring: oklch(0.90 0.15 189.52); /* #46EDD5 */
+  --ring: oklch(0.90 0.15 189.52);
+  /* #46EDD5 */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -87,19 +90,24 @@
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   /* --primary: oklch(0.922 0 0); */
-  --primary: oklch(0.90 0.15 189.52);  /* #46EDD5 */
+  --primary: oklch(0.90 0.15 189.52);
+  /* #46EDD5 */
   /* --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0); */
-  --primary-foreground: oklch(0.205 0 0); 
-  --secondary: oklch(0.47 0.157 37.3); /* #9A3412 */
-  --secondary-foreground: oklch(0.954 0.038 75.16); /* orange-100 for text */
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.25 0.05 182.5);
+  /* Dark teal - monochromatic with primary */
+  --secondary-foreground: oklch(0.95 0 0);
+  /* Light text for contrast */
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   /* --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0); */
-  --accent: oklch(0.837 0.128 66.29); /* #FB923C */
-  --accent-foreground: oklch(0.266 0.079 36.26); /* orange-950 for text */
+  --accent: oklch(0.837 0.128 66.29);
+  /* #FB923C */
+  --accent-foreground: oklch(0.266 0.079 36.26);
+  /* orange-950 for text */
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -123,6 +131,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

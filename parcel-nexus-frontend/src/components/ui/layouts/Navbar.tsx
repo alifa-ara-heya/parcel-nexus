@@ -11,26 +11,71 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { ModeToggle } from "./ModeToggler"
 import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { logoutUser as logoutAction, selectCurrentUser } from "@/redux/features/auth/auth.slice";
+import { role } from "@/constants/role";
+import { User, LogOut, Settings } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+  { href: "/track", label: "Track Parcel" },
 ];
 
 export default function Navbar() {
   const user = useAppSelector(selectCurrentUser);
+  const navigate = useNavigate();
   const [logoutMutation] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
     await logoutMutation(undefined).unwrap();
     dispatch(logoutAction());
+  };
+
+  const handleDashboardNavigation = () => {
+    if (!user) return;
+
+    const userRole = user.role;
+    switch (userRole) {
+      case role.admin:
+        navigate('/admin/analytics');
+        break;
+      case role.sender:
+        navigate('/parcels');
+        break;
+      case role.receiver:
+        navigate('/incoming-parcels');
+        break;
+      default:
+        navigate('/parcels');
+    }
+  };
+
+  const getRoleDisplayName = (userRole: string) => {
+    switch (userRole) {
+      case role.admin:
+        return 'Admin';
+      case role.sender:
+        return 'Sender';
+      case role.receiver:
+        return 'Receiver';
+      default:
+        return 'User';
+    }
   };
 
 
@@ -121,14 +166,42 @@ export default function Navbar() {
           <ModeToggle />
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium">{user.name}</span>
-              <Button
-                onClick={handleLogout}
-                variant="outline"
-                className="text-sm"
-              >
-                Logout
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 px-3 py-2 h-auto hover:bg-muted/50"
+                  >
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                      <User className="h-4 w-4 text-primary-foreground" />
+                    </div>
+                    <div className="hidden sm:block text-left hover:bg-secondary">
+                      <p className="text-sm font-medium text-foreground ">{user.name}</p>
+                      <p className="text-xs text-muted-foreground">{getRoleDisplayName(user.role)}</p>
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user.name}</p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleDashboardNavigation} className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Go to Dashboard</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ) : (
             <Button asChild className="text-sm">

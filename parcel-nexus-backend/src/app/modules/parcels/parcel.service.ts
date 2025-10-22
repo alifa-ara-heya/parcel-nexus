@@ -155,6 +155,26 @@ const getParcelById = async (
 };
 
 /**
+ * Retrieves a parcel by its tracking number (public access).
+ * @param trackingNumber - The tracking number of the parcel to retrieve.
+ * @returns A promise that resolves to the parcel document or null if not found.
+ */
+const getParcelByTrackingNumber = async (trackingNumber: string): Promise<IParcel | null> => {
+    // Find a single parcel by its tracking number.
+    const parcel = await Parcel.findOne({ trackingNumber })
+        .populate('sender', 'name email')
+        .populate('deliveryMan', 'name email phone')
+        .populate('statusHistory.updatedBy', 'name role');
+
+    // If no parcel is found, throw an error.
+    if (!parcel) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Parcel not found with this tracking number');
+    }
+
+    return parcel;
+};
+
+/**
  * Cancels a parcel booking.
  * @param parcelId - The ID of the parcel to cancel.
  * @param user - The user (with ID and role) attempting to cancel the parcel.
@@ -205,9 +225,14 @@ const cancelParcel = async (parcelId: string, user: { userId: string | Types.Obj
 
 /**
  * Retrieves all parcels in the system. (Admin only)
- * @returns A promise that resolves to an object containing the array of all parcel documents and the total count.
+ * @param page - Page number for pagination
+ * @param limit - Number of items per page
+ * @returns A promise that resolves to an object containing the array of all parcel documents and pagination metadata.
  */
-const getAllParcels = async (): Promise<{ parcels: IParcel[]; total: number }> => {
+const getAllParcels = async (page: number = 1, limit: number = 10): Promise<{ parcels: IParcel[]; total: number; page: number; totalPages: number }> => {
+    // Calculate skip value for pagination
+    const skip = (page - 1) * limit;
+
     // An empty filter object will match all documents in the collection.
     const filter = {};
 
@@ -215,12 +240,17 @@ const getAllParcels = async (): Promise<{ parcels: IParcel[]; total: number }> =
     const [parcels, total] = await Promise.all([
         Parcel.find(filter)
             .populate('sender', 'name email')
-            .populate('deliveryMan', 'name email phone').sort({ createdAt: -1 }),
+            .populate('deliveryMan', 'name email phone')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit),
         Parcel.countDocuments(filter),
     ]);
 
-    // Return both the list of parcels and the total count.
-    return { parcels, total };
+    const totalPages = Math.ceil(total / limit);
+
+    // Return both the list of parcels and pagination metadata.
+    return { parcels, total, page, totalPages };
 };
 
 /**
@@ -327,7 +357,7 @@ const getParcelsByDeliveryMan = async (
  * @param deliveryManId - The ID of the delivery man performing the update.
  * @returns The updated parcel document.
  */
-const updateDeliveryStatus = async (
+const updateParcelStatusByDeliveryMan = async (
     parcelId: string,
     status: ParcelStatus,
     user: { userId: string | Types.ObjectId; role: string },
@@ -374,6 +404,33 @@ const updateDeliveryStatus = async (
     return parcel.populate([
         { path: 'deliveryMan', select: 'name email phone' },
         { path: 'sender', select: 'name email' }
+    ]);
+};
+
+const updateParcelStatusByAdmin = async (
+    parcelId: string,
+    status: ParcelStatus,
+    adminId: string | Types.ObjectId,
+): Promise<IParcel> => {
+    const parcel = await Parcel.findById(parcelId);
+    if (!parcel) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Parcel not found.');
+    }
+
+    // Admin can change to any status
+    parcel.currentStatus = status;
+    parcel.statusHistory.push({
+        currentStatus: status,
+        timestamp: new Date(),
+        updatedBy: new Types.ObjectId(adminId),
+        note: 'Status updated by admin.',
+    });
+
+    await parcel.save();
+    return parcel.populate([
+        { path: 'sender', select: 'name email' },
+        { path: 'deliveryMan', select: 'name email phone' },
+        { path: 'statusHistory.updatedBy', select: 'name role' }
     ]);
 };
 
@@ -485,13 +542,15 @@ export const parcelService = {
     createParcel,
     getParcelsBySender,
     getParcelById,
+    getParcelByTrackingNumber,
     cancelParcel,
     getAllParcels,
     getParcelsByReceiver,
     assignDeliveryMan,
     getParcelsByDeliveryMan,
-    updateDeliveryStatus,
+    updateParcelStatusByDeliveryMan,
     confirmDelivery,
     blockParcel,
     unblockParcel,
+    updateParcelStatusByAdmin
 };

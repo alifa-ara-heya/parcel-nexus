@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import httpStatus from 'http-status-codes';
 import { AuthenticatedRequest } from '../../interfaces/request.types';
 import { catchAsync } from '../../utils/catchAsync';
@@ -44,6 +44,18 @@ const getParcelById = catchAsync(async (req: AuthenticatedRequest, res: Response
     });
 });
 
+const getParcelByTrackingNumber = catchAsync(async (req: Request, res: Response) => {
+    const { trackingNumber } = req.params;
+
+    const result = await parcelService.getParcelByTrackingNumber(trackingNumber);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Parcel tracking information retrieved successfully',
+        data: result,
+    });
+});
+
 const cancelParcel = catchAsync(async (req: AuthenticatedRequest, res: Response) => {
     const { id: parcelId } = req.params;
     const { userId, role } = req.user;
@@ -58,14 +70,21 @@ const cancelParcel = catchAsync(async (req: AuthenticatedRequest, res: Response)
 });
 
 const getAllParcels = catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    // In the future, we can pass query params for filtering/pagination here
-    const { parcels, total } = await parcelService.getAllParcels();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const result = await parcelService.getAllParcels(page, limit);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'All parcels retrieved successfully',
-        meta: { total },
-        data: parcels,
+        data: result.parcels,
+        meta: {
+            total: result.total,
+            page: result.page,
+            totalPages: result.totalPages,
+            limit
+        }
     });
 });
 
@@ -107,12 +126,12 @@ const getMyDeliveries = catchAsync(async (req: AuthenticatedRequest, res: Respon
     });
 });
 
-const updateDeliveryStatus = catchAsync(async (req: AuthenticatedRequest, res: Response) => {
+const updateDeliveryStatusByDeliveryMan = catchAsync(async (req: AuthenticatedRequest, res: Response) => {
     const { id: parcelId } = req.params;
     const { status } = req.body;
     const { userId, role } = req.user;
 
-    const result = await parcelService.updateDeliveryStatus(parcelId, status, { userId, role });
+    const result = await parcelService.updateParcelStatusByDeliveryMan(parcelId, status, { userId, role });
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -160,17 +179,33 @@ const unblockParcel = catchAsync(async (req: AuthenticatedRequest, res: Response
     });
 });
 
+const updateParcelStatusByAdmin = catchAsync(async (req: AuthenticatedRequest, res: Response) => {
+    const { id: parcelId } = req.params;
+    const { status } = req.body;
+    const adminId = req.user.userId;
+
+    const result = await parcelService.updateParcelStatusByAdmin(parcelId, status, adminId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Parcel status updated successfully by admin',
+        data: result,
+    });
+});
+
 export const parcelController = {
     createParcel,
     getMyParcels,
     getParcelById,
+    getParcelByTrackingNumber,
     cancelParcel,
     getAllParcels,
     getIncomingParcels,
     assignDeliveryMan,
     getMyDeliveries,
-    updateDeliveryStatus,
+    updateDeliveryStatusByDeliveryMan,
     confirmDelivery,
     blockParcel,
     unblockParcel,
+    updateParcelStatusByAdmin,
 };

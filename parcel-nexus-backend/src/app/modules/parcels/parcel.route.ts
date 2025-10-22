@@ -33,6 +33,11 @@ router.get('/all',
     parcelController.getAllParcels
 );
 
+// Public route for parcel tracking (no authentication required)
+router.get('/track/:trackingNumber',
+    parcelController.getParcelByTrackingNumber
+);
+
 router.get('/:id',
     checkAuth(Role.USER, Role.ADMIN, Role.SENDER, Role.RECEIVER),
     parcelController.getParcelById
@@ -52,7 +57,13 @@ router.patch('/:id/assign',
 router.patch('/:id/update-delivery-status',
     checkAuth(Role.DELIVERY_MAN, Role.ADMIN),
     validateRequest(updateParcelStatusZodSchema),
-    parcelController.updateDeliveryStatus
+    parcelController.updateDeliveryStatusByDeliveryMan
+);
+
+router.patch('/:id/admin-update-status',
+    checkAuth(Role.ADMIN),
+    validateRequest(updateParcelStatusZodSchema),
+    parcelController.updateParcelStatusByAdmin
 );
 
 router.patch('/:id/block',
@@ -66,7 +77,7 @@ router.patch('/:id/unblock',
 );
 
 router.patch('/:id/confirm-delivery',
-    checkAuth(Role.USER),
+    checkAuth(Role.USER, Role.SENDER, Role.RECEIVER, Role.ADMIN),
     parcelController.confirmDelivery
 );
 
