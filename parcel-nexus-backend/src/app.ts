@@ -17,8 +17,11 @@ app.use(cookieParser());
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
-    'https://parcel-delivery-system-alpha.vercel.app'
-];
+    'http://localhost:5174',
+    'https://parcel-delivery-system-alpha.vercel.app',
+    'https://parcel-nexus-frontend.vercel.app',
+    process.env.FRONTEND_URL // Add your frontend URL from environment
+].filter(Boolean); // Remove any undefined values
 
 app.use(cors({
     origin: (origin, callback) => {

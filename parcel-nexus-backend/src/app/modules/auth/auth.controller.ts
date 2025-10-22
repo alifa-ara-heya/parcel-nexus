@@ -78,8 +78,9 @@ const logout = catchAsync(async (req: Request, res: Response, next: NextFunction
 
     const cookieOptions = {
         httpOnly: true,
-        secure: envVars.NODE_ENV === 'production',
-        sameSite: envVars.NODE_ENV === 'production' ? 'none' as const : 'lax' as const,
+        secure: true, // Always secure in production for cross-site cookies
+        sameSite: 'none' as const, // Allow cross-site cookies for different domains
+        domain: undefined, // Let browser handle domain
     };
 
     res.clearCookie("accessToken", {

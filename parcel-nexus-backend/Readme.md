@@ -1,10 +1,12 @@
-# 📦 Parcel Delivery API
+# 📦 Parcel Nexus Backend API
 
-Welcome to the Parcel Delivery API, a secure, modular, and role-based backend system designed for a modern courier service. Built with **Express.js**, **Mongoose**, and **TypeScript**, this project provides a robust foundation for managing parcel deliveries, user roles, and real-time status tracking.
+Welcome to the Parcel Nexus Backend API, a secure, modular, and role-based backend system designed for a modern courier service. Built with **Express.js**, **Mongoose**, and **TypeScript**, this project provides a robust foundation for managing parcel deliveries, user roles, and real-time status tracking.
 
 ---
 
-Live Link: https://parcel-delivery-system-alpha.vercel.app
+**Live API:** [https://parcel-delivery-system-alpha.vercel.app](https://parcel-delivery-system-alpha.vercel.app)  
+**Frontend Demo:** [https://parcel-nexus-frontend.vercel.app](https://parcel-nexus-frontend.vercel.app)  
+**GitHub Repository:** [https://github.com/alifa-ara-heya/parcel-nexus](https://github.com/alifa-ara-heya/parcel-nexus)
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/40151578-f55ef070-67bc-4193-a0b6-a1c323611905?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D40151578-f55ef070-67bc-4193-a0b6-a1c323611905%26entityType%3Dcollection%26workspaceId%3De970fd7a-0c50-4374-8282-5d67086265e0)
 
@@ -26,9 +28,20 @@ This API emulates the core functionalities of a professional courier service lik
 
 ---
 
-### **🛠️ Reminder For Me**
+### **🛠️ Deployment**
 
-Every time I make any changes, I should use just the command `tsc` and then `vercel --prod` to deploy. If the `dist` folder is not automatically created, then create it manually first.
+The API is deployed on Vercel with automatic deployments from the main branch.
+
+**Deployment Commands:**
+```bash
+# Build TypeScript
+tsc
+
+# Deploy to production
+vercel --prod
+```
+
+**Note:** If the `dist` folder is not automatically created, create it manually first.
 
 ### **🛠️ Environment Setup**
 
@@ -37,8 +50,8 @@ To get the project running locally, follow these steps:
 1.  **Clone the repository:**
 
     ```bash
-    git clone <your-repository-url>
-    cd assignment-5-parcel-delivery-system
+    git clone https://github.com/alifa-ara-heya/parcel-nexus.git
+    cd parcel-nexus/parcel-nexus-backend
     ```
 
 2.  **Install dependencies:**
@@ -317,3 +330,7 @@ The API uses a centralized error handling mechanism to ensure consistent and pre
 ### 📄 License
 
 This project is licensed under the MIT License.
+
+---
+
+**Built with ❤️ by [Alifa Ara Heya](https://github.com/alifa-ara-heya)**

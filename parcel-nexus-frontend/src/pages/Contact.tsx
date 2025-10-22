@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -61,6 +61,7 @@ const Contact = () => {
             });
         } catch (error) {
             toast.error('Failed to send your message. Please try again.');
+            console.log(error);
         } finally {
             setIsSubmitting(false);
         }

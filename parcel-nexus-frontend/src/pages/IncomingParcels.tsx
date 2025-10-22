@@ -3,8 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useGetMyIncomingParcelsQuery } from "@/redux/features/parcels/parcel.api";
 import type { IErrorResponse, TParcel } from "@/types";
-import { useAppSelector } from "@/redux/hook";
-import { selectCurrentUser } from "@/redux/features/auth/auth.slice";
 
 const IncomingParcels = () => {
     // const user = useAppSelector(selectCurrentUser);
