@@ -3,7 +3,6 @@ import DashboardLayout from "@/components/ui/layouts/DashboardLayout";
 import { role } from "@/constants/role";
 // import AdminLayout from "@/components/ui/layouts/AdminLayout";
 import Home from "@/pages/Home";
-import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 // import Analytics from "@/pages/Analytics";
 import LoginPage from "@/pages/Login";
@@ -18,6 +17,7 @@ import { receiverSidebarItems } from "./receiverSidebarItems";
 import IncomingParcels from "@/pages/IncomingParcels";
 import MyParcels from "@/pages/MyParcels";
 import ParcelTracking from "@/pages/ParcelTracking";
+import About from "@/pages/About";
 
 export const router = createBrowserRouter([
   {

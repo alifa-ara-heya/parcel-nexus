@@ -8,17 +8,17 @@ const Analytics = lazy(() => import("@/pages/Admin/Analytics"));
 
 export const adminSidebarItems: ISidebarItem[] = [
   {
-    title: "Dashboard",
+    title: "Overview",
     items: [
       {
-        title: "Analytics",
+        title: "Analytics Dashboard",
         url: "/admin/analytics",
         component: Analytics,
       },
     ],
   },
   {
-    title: "Parcels Management",
+    title: "Parcel Management",
     items: [
       {
         title: "All Parcels",
