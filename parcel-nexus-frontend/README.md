@@ -253,6 +253,8 @@ The following features are planned for future releases:
 - **🚚 Delivery Man Management** - Admin feature to manage delivery personnel
 - **🎨 Enhanced Status Colors** - Improved visual indicators for parcel statuses
 - **🔒 Private Parcel Views** - User-specific parcel viewing with enhanced privacy
+- Optimization of the pages, currently the loading time is too slow
+- File(image) uploading feature
 
 ## 🔗 Related Links
 
